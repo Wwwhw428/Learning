@@ -75,3 +75,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 Assets/Temp/
+
+# vscode folder
+.vscode/
+
+# UnityLockfile
+Shader_Learning/Shader_Learning/Temp/UnityLockfile
