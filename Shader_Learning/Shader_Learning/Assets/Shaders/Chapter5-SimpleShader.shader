@@ -48,7 +48,7 @@ Shader "Custom/Chapter5-SimpleShader"
                 c *= _Color.rgb;
                 return fixed4(c, 1.0);
             }
-
+            // test
             ENDCG
         }
     }
