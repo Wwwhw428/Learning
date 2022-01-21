@@ -14,6 +14,8 @@ Shader "Custom/Chapter5-SimpleShader"
             #pragma vertex vert
             #pragma fragment frag
 
+            fixed4 _Color;
+
             // 顶点着色器的输入 a2v：application vertexshader 把数据从应用阶段传递到顶点着色器中
             struct a2v {
                 // POSITION语义：用模型空间的顶点填充vertex变量

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Chapter5-SimpleShaderMat
+  m_Name: Chapter6-Diffuse Vertex-Level
   m_Shader: {fileID: 4800000, guid: 36aacaa387b60124d9eff60c33b212b4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
