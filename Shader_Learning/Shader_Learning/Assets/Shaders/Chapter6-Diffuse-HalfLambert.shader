@@ -54,7 +54,6 @@ Shader "Custom/Chapter6-Diffuse-HalfLambert"
             }
 
             ENDCG
-            // test
         }
     }
 }
