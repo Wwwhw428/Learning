@@ -1,17 +1,16 @@
-Shader "Custom/Chapter6-Diffuse-HalfLambert"
+Shader "Custom/Chapter 6/HalfLambert-Pixel-Level"
 {
     Properties
     {
-        _Diffuse("Diffuse Color", Color) = (1, 1, 1, 1)
+        _Diffuse ("Diffuse", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
-        pass
+        Pass
         {
-            Tags {"LightMode" = "ForwardBase"}
+            Tags { "LightMode"="ForwardBase" }
 
             CGPROGRAM
-
             #pragma vertex vert
             #pragma fragment frag
 
@@ -22,7 +21,7 @@ Shader "Custom/Chapter6-Diffuse-HalfLambert"
             struct a2v
             {
                 float4 vertex : POSITION;
-                float4 normal : NORMAL;
+                float3 normal : NORMAL;
             };
 
             struct v2f
@@ -40,19 +39,16 @@ Shader "Custom/Chapter6-Diffuse-HalfLambert"
                 return o;
             }
 
-            fixed4 frag(v2f i) : SV_TARGET
+            fixed4 frag (v2f i) : SV_Target
             {
                 fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
                 fixed3 worldNormal = normalize(i.worldNormal);
                 fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
-
-                fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * (0.5 * dot(worldNormal, worldLightDir) + 0.5);
-
-                fixed3 color = ambient + diffuse;
+                fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * (dot(worldNormal, worldLightDir) * 0.5 + 0.5);
+                fixed3 color = diffuse + ambient;
 
                 return fixed4(color, 1.0);
             }
-
             ENDCG
         }
     }

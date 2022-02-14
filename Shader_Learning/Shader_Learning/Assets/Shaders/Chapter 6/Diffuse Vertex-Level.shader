@@ -1,15 +1,20 @@
 // Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
 
-Shader "Custom/Chapter6-Diffuse Vertex-Level"
+Shader "Custom/Chapter 6/ Diffuse Vertex-Level"
 {
     Properties
     {
         _Diffuse ("Diffuse", Color) = (1, 1, 1, 1)
     }
+
     SubShader
     {
-        Pass {
-            Tags {"LightMode" = "ForwardBase"}
+        pass
+        {
+            Tags
+            {
+                "LightMode" = "ForwardBase"
+            }
 
             CGPROGRAM
 
@@ -20,28 +25,30 @@ Shader "Custom/Chapter6-Diffuse Vertex-Level"
 
             fixed4 _Diffuse;
 
-            struct a2v {
+            struct a2v
+            {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
             };
 
-            struct v2f {
+            struct v2f
+            {
                 float4 pos : SV_POSITION;
                 fixed3 color : COLOR;
             };
 
-            v2f vert(a2v v) {
+            v2f vert (a2v v)
+            {
                 v2f o;
-
+                // transform vertex from object space to clip space
                 o.pos = UnityObjectToClipPos(v.vertex);
-
-                // get ambient term
+                // get the ambient light term
                 fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
-                // tranform the normal fram object space to world space
-                fixed3 worldNormal = normalize(mul(v.normal, (float3x3)unity_WorldToObject));
                 // get the light direction in world space
                 fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz);
-                // Compute diffuse term color * intensity * max(0, n · l)
+                // transform the normal from object space to world space
+                fixed3 worldNormal = normalize(mul(v.normal, (float3x3)unity_WorldToObject));
+                // compute diffuse term
                 fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate(dot(worldNormal, worldLight));
 
                 o.color = ambient + diffuse;
@@ -49,11 +56,12 @@ Shader "Custom/Chapter6-Diffuse Vertex-Level"
                 return o;
             }
 
-            fixed4 frag(v2f i) : SV_TARGET {
-                return fixed4 (i.color, 1.0);
+            fixed4 frag (v2f i) : SV_Target
+            {
+                return fixed4(i.color, 1.0);
             }
+
             ENDCG
         }
     }
-    // Fallback "Diffuse"
 }
