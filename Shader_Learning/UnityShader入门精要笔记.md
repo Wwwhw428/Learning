@@ -41,4 +41,10 @@ void vert(in a2v v,out v2f o)
 
 * `mul (UNITY_MATRIX_MVP, v)`替换为`UnityObjectToClipPos(v)`
 
-test
+## 杂项
+
+### [SV_POSITION和POSITION](https://blog.csdn.net/zhao_92221/article/details/46797969)
+
+### [_WorldSpaceLightPos0](https://www.jianshu.com/p/c82f973547eb)
+
+向量变换矩阵一般都为3x3的矩阵，因为平移变换对向量没有影响
