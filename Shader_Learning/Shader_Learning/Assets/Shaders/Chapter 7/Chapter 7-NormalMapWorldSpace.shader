@@ -56,15 +56,15 @@ Shader "Custom/Chapter 7/NormalMapWorldSpace"
                 o.uv.zw = v.texcoord.xy * _BumpMap_ST.xy + _BumpMap_ST.zw;
 
                 float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
-                float3 worldNormal = UnityObjectToWorldNormal(v.normal);
-                float3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
-                float3 worldBinormal = cross(worldNormal, worldTangent) * v.tangent.w;
+                fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
+                fixed3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
+                fixed3 worldBinormal = cross(worldNormal, worldTangent) * v.tangent.w;
 
                 // compute the matrix that transform directions from tangent space to world space
                 // put the world position in w component for optimization
-                o.TtoW0 = float4(worldTangent.x, worldBinormal.x, worldBinormal.x, worldPos.x);
-                o.TtoW1 = float4(worldTangent.y, worldBinormal.y, worldBinormal.y, worldPos.y);
-                o.TtoW2 = float4(worldTangent.z, worldBinormal.z, worldBinormal.z, worldPos.z);
+                o.TtoW0 = float4(worldTangent.x, worldBinormal.x, worldNormal.x, worldPos.x);
+                o.TtoW1 = float4(worldTangent.y, worldBinormal.y, worldNormal.y, worldPos.y);
+                o.TtoW2 = float4(worldTangent.z, worldBinormal.z, worldNormal.z, worldPos.z);
 
                 return o;
             }
