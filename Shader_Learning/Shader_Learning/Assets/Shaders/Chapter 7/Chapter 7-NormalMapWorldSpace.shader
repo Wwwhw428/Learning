@@ -73,7 +73,7 @@ Shader "Custom/Chapter 7/NormalMapWorldSpace"
                 float3 worldPos = float3(i.TtoW0.w, i.TtoW1.w, i.TtoW2.w);
                 float3 worldLightDir = normalize(UnityWorldSpaceLightDir(worldPos));
                 float3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
-
+                
                 fixed3 bump = UnpackNormal(tex2D(_BumpMap, i.uv.zw));
                 bump.xy *= _BumpScale;
                 bump.z = sqrt(1.0 - saturate(dot(bump.xy, bump.xy)));
