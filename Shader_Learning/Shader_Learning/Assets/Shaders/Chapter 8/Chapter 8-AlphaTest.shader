@@ -7,6 +7,9 @@ Shader "Custom/Chapter 8/AlphaTest" {
     SubShader {
         Tags { "Queue" = "AlphaTest" "IgnoreProjector" = "True" "RenderType" = "TransparentCutout"}
         pass {
+            // turn off culling
+            Cull Off
+
             Tags { "LightMode" = "ForwardBase" }
             CGPROGRAM
 
@@ -51,9 +54,9 @@ Shader "Custom/Chapter 8/AlphaTest" {
                 fixed4 texColor = tex2D(_MainTex, i.uv);
 
                 // Alpha test
-                clip(texColor - _Cutoff);
+                clip(texColor.a - _Cutoff);
                 // Equal to
-                // if ((texColor - _Cutoff) < 0) discard;
+                // if ((texColor.a - _Cutoff) < 0) discard;
 
                 fixed3 albedo = texColor.rgb * _Color.rgb;
                 fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.rgb * albedo;

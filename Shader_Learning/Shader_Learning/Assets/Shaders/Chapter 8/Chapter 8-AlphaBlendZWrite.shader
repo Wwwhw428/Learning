@@ -15,6 +15,9 @@ Shader "Custom/Chapter 8/AlphaBlendZWrite"
         }
 
         pass {
+            ZWrite Off
+            Blend SrcAlpha OneMinusSrcAlpha
+            
             Tags { "LightMode" = "ForwardBase" }
             
             CGPROGRAM
@@ -54,9 +57,15 @@ Shader "Custom/Chapter 8/AlphaBlendZWrite"
 
             fixed4 frag (v2f i) : SV_TARGET {
                 fixed3 worldNormal = normalize(i.worldNormal);
-                fixed3 lightDir = normalize(UnityWorldSpaceLightDir(v.worldPos));
+                fixed3 lightDir = normalize(UnityWorldSpaceLightDir(i.worldPos));
+                
+                fixed4 texColor = tex2D(_MainTex, i.uv);
+                fixed3 albedo = texColor.rgb * _Color.rgb;
+                fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo;
 
-                fixed3 albedo = 
+                fixed3 diffuse = albedo * _LightColor0.rgb * saturate(dot(worldNormal, lightDir));
+
+                return fixed4(diffuse + ambient, texColor.a * _AlphaScale);
             }
             ENDCG
         }
