@@ -45,7 +45,20 @@ Shader "Custom/Common/BlendWithShadow"
             struct v2f {
                 float4 pos : SV_POSITION;
                 float3 worldNormal : TEXCOORD0;
-                
+                float4 worldPos : TEXCOORD1;
+                float2 uv : TEXCOORD2;
+                SHADOW_COORDS(3);
+            };
+
+            v2f vert (a2v v) {
+                v2f o;
+
+                o.pos = UnityObjectToClipPos(v.vertex);
+                o.worldNormal = UnityObjectToWorldNormal(v.normal);
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
+                o.uv = texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
+
+                return o;
             }
 
             ENDCG
